@@ -1,7 +1,7 @@
 use serde_bytes::ByteBuf;
 
 #[derive(Debug, Deserialize)]
-struct Node(String, i64);
+pub struct Node(String, i64);
 
 #[derive(Debug, Deserialize)]
 pub struct File {
@@ -34,26 +34,26 @@ pub struct Info {
 
 #[derive(Debug, Deserialize)]
 pub struct Torrent {
-    info: Info,
+    pub info: Info,
     #[serde(default)]
-    announce: Option<String>,
+    pub announce: Option<String>,
     #[serde(default)]
-    nodes: Option<Vec<Node>>,
+    pub nodes: Option<Vec<Node>>,
     #[serde(default)]
-    encoding: Option<String>,
+    pub encoding: Option<String>,
     #[serde(default)]
-    httpseeds: Option<Vec<String>>,
+    pub httpseeds: Option<Vec<String>>,
     #[serde(default)]
     #[serde(rename="announce-list")]
-    announce_list: Option<Vec<Vec<String>>>,
+    pub announce_list: Option<Vec<Vec<String>>>,
     #[serde(default)]
     #[serde(rename="creation date")]
-    creation_date: Option<i64>,
+    pub creation_date: Option<i64>,
     #[serde(rename="comment")]
-    comment: Option<String>,
+    pub comment: Option<String>,
     #[serde(default)]
     #[serde(rename="created by")]
-    created_by: Option<String>,
+    pub created_by: Option<String>,
 }
 
 pub fn render_torrent(torrent: &Torrent) {

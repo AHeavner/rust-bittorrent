@@ -19,7 +19,7 @@ fn main() {
     let torrent: bencode::Torrent = de::from_bytes(&bytes).unwrap();
     bencode::render_torrent(&torrent);
 
-    //let url = tracker::get_url(&torrent.announce);
+    let url = tracker::get_url(&torrent.announce.unwrap());
     //println!("{:#?}", &torrent);
-    //println!("{:#?}", &url);
+    println!("{:#?}", &url);
 }
