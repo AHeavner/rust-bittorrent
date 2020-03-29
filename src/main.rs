@@ -2,21 +2,24 @@ use std::io::Read;
 use std::fs::File;
 use std::env;
 
-use bendy::decoding::{Error, FromBencode};
+#[macro_use]
+extern crate serde_derive;
+
+use serde_bencode::de;
 mod bencode;
 mod tracker;
 
-fn main() -> Result<(), Error> {
+fn main() {
     let args: Vec<String> = env::args().collect();
-    let mut file = File::open(&args[1])?;
+    let mut file = File::open(&args[1]).unwrap();
     
     let mut bytes: Vec<u8> = Vec::new();
-    file.read_to_end(&mut bytes)?;
+    file.read_to_end(&mut bytes).unwrap();
     
-    let torrent = bencode::MetaInfo::from_bencode(&bytes)?;
-    let url = tracker::get_url(&torrent.announce);
-    println!("{:#?}", &torrent);
-    println!("{:#?}", &url);
+    let torrent: bencode::Torrent = de::from_bytes(&bytes).unwrap();
+    bencode::render_torrent(&torrent);
 
-    Ok(())
+    //let url = tracker::get_url(&torrent.announce);
+    //println!("{:#?}", &torrent);
+    //println!("{:#?}", &url);
 }
